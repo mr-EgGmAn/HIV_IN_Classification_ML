@@ -21,11 +21,11 @@ from rdkit.Chem import MACCSkeys
 from rdkit.Chem.AtomPairs import Pairs, Torsions
 from rdkit.Avalon import pyAvalonTools as fpAvalon
 from rdkit.Chem.Pharm2D import Gobbi_Pharm2D,Generate
-from mol2vec.features import mol2alt_sentence, MolSentence, DfVec, sentences2vec
-from mol2vec.helpers import depict_identifier, plot_2D_vectors, IdentifierTable, mol_to_svg
-from gensim.models import word2vec
-from mol2vec import features
-from mol2vec import helpers
+# from mol2vec.features import mol2alt_sentence, MolSentence, DfVec, sentences2vec
+# from mol2vec.helpers import depict_identifier, plot_2D_vectors, IdentifierTable, mol_to_svg
+# from gensim.models import word2vec
+# from mol2vec import features
+# from mol2vec import helpers
 from map4 import MAP4Calculator
 from mhfp.encoder import MHFPEncoder
 from mordred import Calculator, descriptors
@@ -261,16 +261,16 @@ class Featurize():
         self.mord = pd.concat([self.mord[[self.activity_col]], df_2d_mordred], axis = 1)
         self.mord.to_csv(f"{self.save_dir}Mordred.csv", index= False)
         
-        # 19. Mol2vec
-        self.mol2vec =self.data.copy()
-        print("CALCULATING Mol2vec...")
-        model = word2vec.Word2Vec.load(self.m2v_path)
-        self.mol2vec['sentence'] = self.mol2vec.progress_apply(lambda x: MolSentence(mol2alt_sentence(x['Molecule'], 1)), axis=1)
-        self.mol2vec['mol2vec'] = [DfVec(x) for x in sentences2vec(self.mol2vec['sentence'], model, unseen='UNK')]
-        X = np.array([x.vec for x in self.mol2vec['mol2vec']])
-        #y = np.array(self.data['pChEMBL Value'].astype(float))
-        self.mol2vec = pd.concat([self.data[[self.activity_col]], pd.DataFrame(X)], axis = 1)
-        self.mol2vec.to_csv(f"{self.save_dir}Mol2vec.csv", index= False)
+        # # 19. Mol2vec
+        # self.mol2vec =self.data.copy()
+        # print("CALCULATING Mol2vec...")
+        # model = word2vec.Word2Vec.load(self.m2v_path)
+        # self.mol2vec['sentence'] = self.mol2vec.progress_apply(lambda x: MolSentence(mol2alt_sentence(x['Molecule'], 1)), axis=1)
+        # self.mol2vec['mol2vec'] = [DfVec(x) for x in sentences2vec(self.mol2vec['sentence'], model, unseen='UNK')]
+        # X = np.array([x.vec for x in self.mol2vec['mol2vec']])
+        # #y = np.array(self.data['pChEMBL Value'].astype(float))
+        # self.mol2vec = pd.concat([self.data[[self.activity_col]], pd.DataFrame(X)], axis = 1)
+        # self.mol2vec.to_csv(f"{self.save_dir}Mol2vec.csv", index= False)
             
       
    

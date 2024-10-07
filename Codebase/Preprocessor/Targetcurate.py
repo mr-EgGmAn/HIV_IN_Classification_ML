@@ -29,7 +29,7 @@ class target_curate:
         df = data[data[type_col]==type_arg]
         df= df.dropna(subset =unit_col)
         df.reset_index(drop=True, inplace = True)
-        type = ['μM','µM', 'nM', 'mM', 'M', 'nmol/l']
+        type = ['uM','µM', 'nM', 'mM', 'M', 'nmol/l']
         idx = []
         for key, value in enumerate(df[unit_col]):
             if value in type:
@@ -43,7 +43,7 @@ class target_curate:
         #unit = df['Unit'].unique()
 
         for key, value in enumerate(df[unit_col]):
-            if value == 'μM':
+            if value == 'uM':
                 df.loc[key, 'pChEMBL'] = -np.log10(df.loc[key, active_col]*1e-6)
             elif value  == 'µM':
                 df.loc[key, 'pChEMBL'] = -np.log10(df.loc[key, active_col]*1e-6)

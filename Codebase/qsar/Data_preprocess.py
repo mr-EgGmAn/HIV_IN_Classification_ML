@@ -147,13 +147,19 @@ class Data_preprocess():
         Returns dataframe containing the total missing values and percentage of total
         missing values of a column.
         """
-        miss_df = pd.DataFrame({'ColumnName':[],'TotalMissingVals':[],'PercentMissing':[]})
+        # miss_df = pd.DataFrame({'ColumnName':[],'TotalMissingVals':[],'PercentMissing':[]})
+        missing_info_list = []
         for col in data.columns:
             sum_miss_val = data[col].isnull().sum()
             percent_miss_val = round((sum_miss_val/data.shape[0])*100,2)
             missinginfo = {"ColumnName" : col, "TotalMissingVals" : sum_miss_val, "PercentMissing" : percent_miss_val}
-            miss_df = miss_df.append(missinginfo, ignore_index = True)
-
+            missing_info_list.append({
+        "ColumnName": col,
+        "TotalMissingVals": sum_miss_val,
+        "PercentMissing": percent_miss_val
+    })
+            # miss_df = pd.concat([miss_df, missinginfo], ignore_index=True)
+        miss_df = pd.DataFrame(missing_info_list)
         miss_df = miss_df[miss_df["PercentMissing"] > 0.0]
         miss_df = miss_df.reset_index(drop = True)
         return miss_df

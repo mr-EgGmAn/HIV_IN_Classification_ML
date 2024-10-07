@@ -65,6 +65,7 @@ class statistic_test:
         
     def posthoc(self):
        #Create dataframe for Posthocs
+        print(self.results.shape)
         a = np.stack(self.results)
         self.df_metrics = pd.DataFrame(a.T, columns = self.names)
         self.df_melt = pd.melt(self.df_metrics.reset_index(), id_vars=['index'], value_vars=self.df_metrics.columns)
